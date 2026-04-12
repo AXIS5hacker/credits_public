@@ -1,0 +1,6 @@
+**/__pycache__
+media/*.wav
+media/*.WAV
+media/*.mp3
+media/*.MP3
+venv
