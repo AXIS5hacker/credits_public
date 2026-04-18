@@ -2,7 +2,7 @@ from animation_functions import debug_info
 from CLIRender.classes import enable_ansi
 from colorama import Fore, Style
 
-import keyboard
+from pynput import keyboard
 import time
 import os
 import random
@@ -309,30 +309,60 @@ playback.load_file(filename)
 print("\033[1;1Hskips\n\n1 | start\n2 | title\n3 | funding\n4 | loading\n5 | break\n6 | final")
 
 # Skips forward to the title scene
+key_states = {
+    '1': False,
+    '2': False,
+    '3': False,
+    '4': False,
+    '5': False,
+    '6': False,
+    'p': False,
+    ',': False,
+    '.': False,
+    '/': False
+}
+
+def on_press(key):
+    try:
+        if key.char in key_states:
+            key_states[key.char] = True
+    except AttributeError:
+        pass
+
+def on_release(key):
+    try:
+        if key.char in key_states:
+            key_states[key.char] = False
+    except AttributeError:
+        pass
+
+listener = keyboard.Listener(on_press=on_press, on_release=on_release)
+listener.start()
+
 time_menu = time.time()
 while time.time() - 2 < time_menu:
-    if keyboard.is_pressed("1"):
+    if key_states['1']:
         time_menu = 99999999999999999999
         break
-    elif keyboard.is_pressed("2"):
+    elif key_states['2']:
         skip_beats(controller, 1000, 1081)
         time_menu = 99999999999999999999
         break
-    elif keyboard.is_pressed("3"):
+    elif key_states['3']:
         skip_beats(controller, 1770, 1851)
         controller.events[1849] = am.Event(1849, am.Event.layer_scene("redraw_ui")),
         controller.events[1860] = am.Event(1860, am.Event.remove_scene("redraw_ui")),
         time_menu = 99999999999999999999
         break
-    elif keyboard.is_pressed("4"):
+    elif key_states['4']:
         skip_beats(controller, 3040, 3133)
         time_menu = 99999999999999999999
         break
-    elif keyboard.is_pressed("5"):
+    elif key_states['5']:
         skip_beats(controller, 3780, 3898)
         time_menu = 99999999999999999999
         break
-    elif keyboard.is_pressed("6"):
+    elif key_states['6']:
         skip_beats(controller, 5420, 5501)
         time_menu = 99999999999999999999
         break
@@ -340,7 +370,12 @@ while time.time() - 2 < time_menu:
     time.sleep(0.01)
 
 
-os.system("cls")
+if os.name == "nt":
+    os.system("cls")
+elif os.name == "posix":
+    os.system("clear")
+else:
+    print("\033[2J")
 
 # wave_obj = sa.WaveObject.from_wave_file(filename)
 # play_obj = wave_obj.play()
@@ -372,30 +407,30 @@ while playback.active:
         beat += 1
 
     if need_update:
-        if keyboard.is_pressed("p"):
+        if key_states['p']:
             if not paused_this_frame:
                 if playback.paused:
                     playback.resume()
                 else:
                     playback.pause()
-
+    
                 paused_this_frame = True
         else:
             paused_this_frame = False
-
-        if keyboard.is_pressed(","):
+    
+        if key_states[',']:
             if not ff_this_frame:
                 ff_this_frame = True
             else:
                 playback.seek(playback.curr_pos + delay * 3)
-
-        if keyboard.is_pressed("."):
+    
+        if key_states['.']:
             if not ff_this_frame:
                 ff_this_frame = True
             else:
                 playback.seek(playback.curr_pos + delay * 7)
-
-        if keyboard.is_pressed("/"):
+    
+        if key_states['/']:
             if not ff_this_frame:
                 ff_this_frame = True
             else:
@@ -408,3 +443,4 @@ while playback.active:
         #         ffwing.toggle_music()
 
         last_update = time.time()
+
