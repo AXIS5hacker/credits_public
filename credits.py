@@ -307,7 +307,12 @@ playback = Playback()
 playback.load_file(filename)
 
 # Clear the console before showing the skip menu
-os.system('cls' if os.name == 'nt' else 'clear')
+if os.name == "nt":
+    os.system("cls")
+elif os.name == "posix":
+    os.system("clear")
+else:
+    print("\033[2J")
 
 print("\033[1;1Hskips\n\n1 | start\n2 | title\n3 | funding\n4 | loading\n5 | break\n6 | final")
 
