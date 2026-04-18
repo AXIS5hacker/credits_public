@@ -306,6 +306,9 @@ filename = "media/credits.wav"
 playback = Playback()
 playback.load_file(filename)
 
+# Clear the console before showing the skip menu
+os.system('cls' if os.name == 'nt' else 'clear')
+
 print("\033[1;1Hskips\n\n1 | start\n2 | title\n3 | funding\n4 | loading\n5 | break\n6 | final")
 
 # Skips forward to the title scene
@@ -340,7 +343,7 @@ while time.time() - 2 < time_menu:
     time.sleep(0.01)
 
 
-os.system("cls")
+os.system('cls' if os.name == 'nt' else 'clear')
 
 # wave_obj = sa.WaveObject.from_wave_file(filename)
 # play_obj = wave_obj.play()
