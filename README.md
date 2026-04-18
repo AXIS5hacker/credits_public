@@ -18,7 +18,7 @@
 # how to run
  Run credits.py. Required libraries:
  - just-playback https://github.com/cheofusi/just_playback
- - keyboard https://github.com/boppreh/keyboard
+ - keyboard https://github.com/boppreh/keyboard **(must be run as `root` on linux! sorry!)**
  - colorama https://github.com/tartley/colorama -
  the version of colorama used is also included inside this repository.
 
@@ -26,3 +26,22 @@
  ```
  pip install -r requirements.txt
  ```
+
+# misc
+
+## start-of-song skips
+before the animation starts, a menu will appear with options to skip to specific parts of the song. i used this a lot while debugging and left it in because i ~forgot~ felt i should include it. input nothing to let the song start normally, else hold a digit key on the keyboard to skip:
+- 1 | start _(equivalent to pressing no button but slightly faster)_
+- 2 | title _(flashing square in center + artist and self credits)_ 
+- 3 | funding _(start of first "Funding for this program was made possible..." section)_ 
+- 4 | loading _(loading bar before fake error and second typography "searching for access point" segment)_
+- 5 | break _(hell ocean, second weather forecast scene)_
+- 6 | final _(return of the flashing square - ending sequence)_
+
+## generic hotkeys
+| hotkey              | effect                   |
+| ------------------- | ------------------------ |
+| `p`                 | play/pause toggle        |
+| `,`                 | small fast forward (4x)  |
+| `.`                 | medium fast forward (8x) |
+| `/`                 | large fast forward (16x) |
