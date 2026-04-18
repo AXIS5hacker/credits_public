@@ -16,9 +16,10 @@
  
  
 # how to run
- Run credits.py. Required libraries:
+ Run `credits.py`. Required libraries:
  - just-playback https://github.com/cheofusi/just_playback
- - keyboard https://github.com/boppreh/keyboard **(must be run as `root` on linux! sorry!)**
+ - keyboard https://github.com/boppreh/keyboard
+   - **important**: if you're running **linux** or **macos**, you might have trouble with this module. if so, try using `credits_pynput.py` instead (and install pynput -- https://pypi.org/project/pynput/)
  - colorama https://github.com/tartley/colorama -
  the version of colorama used is also included inside this repository.
 
