@@ -249,7 +249,7 @@ controller = am.SceneManager((*all_scenes, counter), (
     am.Event(3895, am.Event.swap_scene("clear")),
     am.Event(3896, am.Event.swap_scene("ocean_c")),
     *ocean2_events,
-    
+
     # remember to clean the ocean_c events up, or it will stay in the screen. At frame 4413.
     am.Event(4413, am.Event.swap_scene("clear")),
     am.Event(4460, am.Event.swap_scene("accesspoints")),
@@ -349,8 +349,12 @@ while time.time() - 2 < time_menu:
 
     time.sleep(0.01)
 
-
-os.system('cls' if os.name == 'nt' else 'clear')
+if os.name == "nt":
+    os.system("cls")
+elif os.name == "posix":
+    os.system("clear")
+else:
+    print("\033[2J")
 
 # wave_obj = sa.WaveObject.from_wave_file(filename)
 # play_obj = wave_obj.play()
