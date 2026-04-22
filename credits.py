@@ -422,3 +422,11 @@ while playback.active:
         #         ffwing.toggle_music()
 
         last_update = time.time()
+
+# Add a final clear at the end to prevent the last frame from sticking around when the program ends.
+if os.name == "nt":
+    os.system("cls")
+elif os.name == "posix":
+    os.system("clear")
+else:
+    print("\033[2J")
