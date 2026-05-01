@@ -250,6 +250,8 @@ controller = am.SceneManager((*all_scenes, counter), (
     am.Event(3896, am.Event.swap_scene("ocean_c")),
     *ocean2_events,
 
+    # remember to clean the ocean_c events up, or it will stay in the screen. At frame 4413.
+    am.Event(4413, am.Event.swap_scene("clear")),
     am.Event(4460, am.Event.swap_scene("accesspoints")),
     am.Event(4460, am.Event.layer_scene("fdg_single")),
     am.Event(4534, lambda c: c.set_generator_data(
@@ -306,6 +308,14 @@ filename = "media/credits.wav"
 playback = Playback()
 playback.load_file(filename)
 
+# Clear the console before showing the skip menu
+if os.name == "nt":
+    os.system("cls")
+elif os.name == "posix":
+    os.system("clear")
+else:
+    print("\033[2J")
+
 print("\033[1;1Hskips\n\n1 | start\n2 | title\n3 | funding\n4 | loading\n5 | break\n6 | final")
 
 # Skips forward to the title scene
@@ -339,8 +349,12 @@ while time.time() - 2 < time_menu:
 
     time.sleep(0.01)
 
-
-os.system("cls")
+if os.name == "nt":
+    os.system("cls")
+elif os.name == "posix":
+    os.system("clear")
+else:
+    print("\033[2J")
 
 # wave_obj = sa.WaveObject.from_wave_file(filename)
 # play_obj = wave_obj.play()
@@ -408,3 +422,11 @@ while playback.active:
         #         ffwing.toggle_music()
 
         last_update = time.time()
+
+# Add a final clear at the end to prevent the last frame from sticking around when the program ends.
+if os.name == "nt":
+    os.system("cls")
+elif os.name == "posix":
+    os.system("clear")
+else:
+    print("\033[2J")
